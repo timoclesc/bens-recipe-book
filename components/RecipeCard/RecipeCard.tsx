@@ -6,9 +6,9 @@ import Typography from '@mui/material/Typography';
 import { Recipe } from 'schema-dts';
 import styles from './RecipeCard.module.css';
 
-import * as dayjs from 'dayjs';
-import * as duration from 'dayjs/plugin/duration';
-import * as relativeTime from 'dayjs/plugin/relativeTime';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
@@ -27,25 +27,25 @@ export const RecipeCard:FC<Props> = ({
       { recipe.image ? 
       <CardMedia
         sx={{ aspectRatio: 1.3 }}
-        image={recipe.image[recipe.image.length - 1]}
+        image={ Array.isArray(recipe.image) ? recipe.image[recipe.image.length - 1] : recipe.image}
         title=""
       />
         : undefined }
       <CardContent sx={{textAlign: 'left'}}>
-        {recipe.publisher ? <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          From: <a href={url}>{ recipe.publisher.name}</a>
+        {recipe.publisher && typeof recipe.publisher == 'object' ? <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          From: <a href={url}>{'name' in recipe.publisher ? recipe.publisher.name as string : '' }</a>
         </Typography> : undefined }
         <Typography variant="h4" component="h2">
-          { recipe.name }
+          { recipe.name as string}
         </Typography>
         <Typography  sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          { recipe.recipeCategory }
+          { recipe.recipeCategory as string }
         </Typography>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          { recipe.recipeYield}{' | '}{ recipe.totalTime ? dayjs.duration(recipe.totalTime).humanize() : undefined }
+          { recipe.recipeYield as string}{' | '}{ recipe.totalTime ? dayjs.duration(recipe.totalTime as string).humanize() : undefined }
         </Typography>
-        <Typography sx={{ fontSize: 14 }} sx={{ mb: 3 }}>
-          <div dangerouslySetInnerHTML={{__html: recipe.description}}></div>
+        <Typography sx={{ mb: 3, fontSize: 14 }}>
+          <div dangerouslySetInnerHTML={{__html: recipe.description as string}}></div>
           </Typography>
 
           <Typography variant="h5" component="h3" gutterBottom>
@@ -53,7 +53,7 @@ export const RecipeCard:FC<Props> = ({
           </Typography>
           <Typography variant="body2" sx={{ mb: 3 }}>
             {
-              recipe.recipeIngredient ? 
+              recipe.recipeIngredient && Array.isArray(recipe.recipeIngredient)? 
               <ul className={styles.list}>
                 {recipe.recipeIngredient.map(
                 ingredient => <li key={ingredient}>{ingredient}</li>
@@ -68,7 +68,7 @@ export const RecipeCard:FC<Props> = ({
           </Typography>
           <Typography variant="body2" sx={{ mb: 3 }}>
             {
-              recipe.recipeInstructions ? 
+              recipe.recipeInstructions && Array.isArray(recipe.recipeInstructions) ? 
               <ul className={styles.list}>
                 {recipe.recipeInstructions.map(
                   step => <li key={step.text}>{step.text}</li>
@@ -85,9 +85,9 @@ export const RecipeCard:FC<Props> = ({
             {
               recipe.nutrition ? 
               <>
-                Carbs: {recipe.nutrition?.carbohydrateContent}<br />
-                Protein: {recipe.nutrition?.proteinContent}<br />
-                Fat: {recipe.nutrition?.fatContent}
+                Carbs: {'carbohydrateContent' in recipe.nutrition ? recipe.nutrition?.carbohydrateContent : '?'}<br />
+                Protein: { 'proteinContent' in recipe.nutrition ? recipe.nutrition?.proteinContent : '?'}<br />
+                Fat: { 'fatContent' in recipe.nutrition ? recipe.nutrition?.fatContent : '?'}
               </>
                 : undefined 
             }

@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
 
     if ('@type' in data && data['@type'] == 'Recipe') {
         recipe = data
-    } else if ('@graph' in data) {
+    } else if ('@graph' in data && Array.isArray(data['@graph'])) {
         [...data['@graph']].forEach(
             markup => { 
                 if (markup['@type'] == 'Recipe') {
