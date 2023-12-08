@@ -16,7 +16,11 @@ const eggs: RecipeLinkType[] = [
   {
     name: 'Shakshuka',
     url: 'https://cooking.nytimes.com/recipes/1014721-shakshuka-with-feta',
-  }
+  },
+  {
+    name: 'Egg Curry',
+    url: 'https://cooking.nytimes.com/recipes/1020912-egg-curry'
+  },
 ];
 
 const tofu: RecipeLinkType[] = [
@@ -27,10 +31,14 @@ const tofu: RecipeLinkType[] = [
   {
     name: 'Glazed Tofu with Chile and Star Anise',
     url: 'https://cooking.nytimes.com/recipes/1022167-glazed-tofu-with-chile-and-star-anise'
+  },
+  {
+    name: 'BBQ Tofu',
+    url: 'https://cooking.nytimes.com/recipes/1021720-folamis-bbq-tofu'
   }
 ];
 
-const beans: RecipeLinkType[] = [
+const legumes: RecipeLinkType[] = [
   {
     name: 'Cheesey Bean Bake',
     url: 'https://cooking.nytimes.com/recipes/1020705-cheesy-spicy-black-bean-bake',
@@ -38,6 +46,29 @@ const beans: RecipeLinkType[] = [
   {
     name: 'Spicy Dahl',
     url: 'https://biancazapatka.com/en/red-lentil-dahl/'
+  },
+  {
+    name: 'Vegan Chili',
+    url: 'https://cooking.nytimes.com/recipes/1020866-vegan-chili'
+  },
+  {
+    name: 'Red Lentil Pancake',
+    url: 'https://www.lazycatkitchen.com/red-lentil-pancakes/'
+  }
+];
+
+const misc: RecipeLinkType[] = [
+  {
+    name: 'Seitan Piccata',
+    url: 'https://www.delish.com/cooking/recipe-ideas/a35569963/vegan-piccata-recipe/',
+  },
+  {
+    name: 'Chia Smoothie',
+    url: 'https://www.acouplecooks.com/chia-seed-smoothie/'
+  },
+  {
+    name: 'High protein bread',
+    url: 'https://holycowvegan.net/high-protein-whole-wheat-sandwich-bread/'
   }
 ];
 
@@ -70,7 +101,8 @@ export default function Home() {
         </header>
         <RecipeList label="Egg" recipeList={eggs} handleLinkClick={handleRecipe} />
         <RecipeList label="Tofu" recipeList={tofu} handleLinkClick={handleRecipe} />
-        <RecipeList label="Legumes" recipeList={beans} handleLinkClick={handleRecipe} />
+        <RecipeList label="Legumes" recipeList={legumes} handleLinkClick={handleRecipe} />
+        <RecipeList label="Misc" recipeList={misc} handleLinkClick={handleRecipe} />
 
         <div className={styles.recipeContainer}>
           { url ? (recipe ? <RecipeCard recipe={recipe} url={url}/> : <>Loading</>) : undefined }

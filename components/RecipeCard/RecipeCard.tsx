@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Recipe } from 'schema-dts';
+import { Recipe, ImageObject  } from 'schema-dts';
 import styles from './RecipeCard.module.css';
 
 import dayjs from 'dayjs';
@@ -18,6 +18,22 @@ type Props = {
   url: string;
 }
 
+function getImageSrc (image: string | ImageObject[] | object ): string {
+  if (typeof image === 'string') {
+    return image;
+  } 
+
+  if ( Array.isArray(image) && typeof image[image.length - 1] === 'string') {
+    return image[image.length - 1];
+  }
+
+  if ( Array.isArray(image) && typeof image[image.length - 1] === 'object') {
+    return image[image.length -1].url;
+  } 
+
+  return '';
+}
+
 export const RecipeCard:FC<Props> = ({
     recipe,
     url
@@ -27,7 +43,7 @@ export const RecipeCard:FC<Props> = ({
       { recipe.image ? 
       <CardMedia
         sx={{ aspectRatio: 1.3 }}
-        image={ Array.isArray(recipe.image) ? recipe.image[recipe.image.length - 1] : recipe.image}
+        image={getImageSrc(recipe.image)}
         title=""
       />
         : undefined }
