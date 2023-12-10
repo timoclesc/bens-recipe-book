@@ -26,18 +26,16 @@ export const RecipeList:FC<Props> = ({
         <Typography variant="h4" component="h2">
           { label }
         </Typography>
-        <Typography  sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          <List>
-          { recipeList.map(
-            ({name, url}) => (
-              <ListItem key={url} disablePadding>
-                <RecipeLink label={name} onClick={() => handleLinkClick(url)} />
-              </ListItem>)
-            )
-          }
-          
-          </List>
-        </Typography>
+        <List>
+        { recipeList.map(
+          ({name, url}) => (
+            <ListItem key={url} disablePadding>
+              <RecipeLink label={name} onClick={() => handleLinkClick(url)} />
+            </ListItem>)
+          )
+        }
+        
+        </List>
       </CardContent>
     </Card>
   );

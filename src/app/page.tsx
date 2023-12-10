@@ -1,11 +1,11 @@
 "use client"
 
 import styles from './page.module.css'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { RecipeLinkType } from '@/components/RecipeLink';
 import { RecipeCard } from '@/components/RecipeCard';
 import { RecipeList } from '@/components/RecipeList';
-
+import { AppModal } from '@/components/AppModal/AppModal';
 
 
 const eggs: RecipeLinkType[] = [
@@ -77,8 +77,15 @@ const misc: RecipeLinkType[] = [
 export default function Home() {
   const [url, setUrl] = useState<string>();
   const [recipe, setRecipe] = useState();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const getRecipe = async (url:string) => {
+  const handleClose = () => {
+    setModalOpen(false);
+    setUrl(undefined);
+    setRecipe(undefined);
+  };
+
+  const getRecipe = async (url: string) => {
     fetch(`/api/recipe?url=${url}`).then(
       res => res.json()
     ).then(
@@ -90,6 +97,7 @@ export default function Home() {
     setUrl(url);
     setRecipe(undefined);
     getRecipe(url);
+    setModalOpen(true);
   }
 
   return (
@@ -104,10 +112,10 @@ export default function Home() {
         <RecipeList label="Legumes" recipeList={legumes} handleLinkClick={handleRecipe} />
         <RecipeList label="Misc" recipeList={misc} handleLinkClick={handleRecipe} />
 
-        <div className={styles.recipeContainer}>
-          { url ? (recipe ? <RecipeCard recipe={recipe} url={url}/> : <>Loading</>) : undefined }
-        </div>
+        <AppModal isOpen={modalOpen} handleClose={handleClose}>
+          {(recipe && url) ? <RecipeCard recipe={recipe} url={url} /> : <>Loading</>}
+        </AppModal>
       </div>
-    </main>
+    </main >
   )
 }
