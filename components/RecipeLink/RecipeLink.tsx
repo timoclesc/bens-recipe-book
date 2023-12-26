@@ -5,7 +5,8 @@ import ListItemText from '@mui/material/ListItemText';
 export type RecipeLinkType = {
     name: string;
     url: string;
-  }
+    notes?: string[]
+}
 
 type Props = HTMLProps<HTMLButtonElement> & {
     label: string;
@@ -14,7 +15,7 @@ type Props = HTMLProps<HTMLButtonElement> & {
 export const RecipeLink: FC<Props> = ({
     label,
     onClick,
-}:Props) => {
+}: Props) => {
     return (
         <ListItemButton component="button" onClick={onClick}>
             <ListItemText primary={label} />

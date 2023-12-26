@@ -6,6 +6,7 @@ import { RecipeLinkType } from '@/components/RecipeLink';
 import { RecipeCard } from '@/components/RecipeCard';
 import { RecipeList } from '@/components/RecipeList';
 import { AppModal } from '@/components/AppModal/AppModal';
+import { Loader } from '@/components/Loader';
 
 
 const eggs: RecipeLinkType[] = [
@@ -21,6 +22,10 @@ const eggs: RecipeLinkType[] = [
     name: 'Egg Curry',
     url: 'https://cooking.nytimes.com/recipes/1020912-egg-curry'
   },
+  {
+    name: 'Plantains with Jammy Eggs',
+    url: 'https://cooking.nytimes.com/recipes/1022450-plantains-with-jammy-tomatoes-and-eggs'
+  }
 ];
 
 const tofu: RecipeLinkType[] = [
@@ -35,6 +40,14 @@ const tofu: RecipeLinkType[] = [
   {
     name: 'BBQ Tofu',
     url: 'https://cooking.nytimes.com/recipes/1021720-folamis-bbq-tofu'
+  },
+  {
+    name: 'Paneer Chilli Dry',
+    url: 'https://cooking.nytimes.com/recipes/1024371-paneer-chile-dry'
+  },
+  {
+    name: 'Cumin Tofu Stir-fry',
+    url: 'https://cooking.nytimes.com/recipes/1022438-cumin-tofu-stir-fry'
   }
 ];
 
@@ -69,19 +82,26 @@ const misc: RecipeLinkType[] = [
   {
     name: 'High protein bread',
     url: 'https://holycowvegan.net/high-protein-whole-wheat-sandwich-bread/'
+  },
+  {
+    name: 'Pumfu (Pepita Tofu)',
+    url: 'https://www.marystestkitchen.com/pumpkin-seed-tofu/',
+    notes: [
+      '35g of protein per serving (recipe makes 4 servings)'
+    ]
   }
 ];
 
 
 
 export default function Home() {
-  const [url, setUrl] = useState<string>();
+  const [recipeLink, setRecipeLink] = useState<RecipeLinkType>();
   const [recipe, setRecipe] = useState();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const handleClose = () => {
     setModalOpen(false);
-    setUrl(undefined);
+    setRecipeLink(undefined);
     setRecipe(undefined);
   };
 
@@ -93,10 +113,10 @@ export default function Home() {
     );
   };
 
-  const handleRecipe = (url: string) => {
-    setUrl(url);
+  const handleRecipe = (recipeLink: RecipeLinkType) => {
+    setRecipeLink(recipeLink);
     setRecipe(undefined);
-    getRecipe(url);
+    getRecipe(recipeLink.url);
     setModalOpen(true);
   }
 
@@ -113,7 +133,7 @@ export default function Home() {
         <RecipeList label="Misc" recipeList={misc} handleLinkClick={handleRecipe} />
 
         <AppModal isOpen={modalOpen} handleClose={handleClose}>
-          {(recipe && url) ? <RecipeCard recipe={recipe} url={url} /> : <>Loading</>}
+          {(recipe && recipeLink) ? <RecipeCard recipe={recipe} recipeLink={recipeLink} /> : <Loader />}
         </AppModal>
       </div>
     </main >

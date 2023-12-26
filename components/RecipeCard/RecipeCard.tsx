@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Recipe, ImageObject } from 'schema-dts';
 import styles from './RecipeCard.module.css';
-
+import { RecipeLinkType } from '@/components/RecipeLink';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -16,7 +16,7 @@ dayjs.extend(relativeTime);
 
 type Props = {
   recipe: Recipe;
-  url: string;
+  recipeLink: RecipeLinkType;
 }
 
 function getImageSrc(image: string | ImageObject[] | object): string {
@@ -37,7 +37,7 @@ function getImageSrc(image: string | ImageObject[] | object): string {
 
 export const RecipeCard: FC<Props> = ({
   recipe,
-  url
+  recipeLink
 }: Props) => {
   return (
     <Card sx={{ minWidth: 275, maxWidth: '100%', maxHeight: '100%', overflow: 'scroll' }}>
@@ -50,7 +50,7 @@ export const RecipeCard: FC<Props> = ({
         : undefined}
       <CardContent sx={{ textAlign: 'left' }}>
         {recipe.publisher && typeof recipe.publisher == 'object' ? <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          From: <a href={url}>{'name' in recipe.publisher ? recipe.publisher.name as string : ''}</a>
+          From: <a href={recipeLink.url}>{'name' in recipe.publisher ? recipe.publisher.name as string : ''}</a>
         </Typography> : undefined}
         <Typography variant="h4" component="h2">
           {recipe.name as string}
@@ -110,6 +110,16 @@ export const RecipeCard: FC<Props> = ({
                   </>
                   : undefined
               }
+            </Typography>
+          </> : undefined}
+
+        {recipeLink.notes ?
+          <>
+            <Typography variant="h5" component="h3" gutterBottom>
+              Tim&apos;s Notes
+            </Typography>
+            <Typography variant="body2" sx={{ mb: 3 }}>
+              {recipeLink.notes.map(note => note)}
             </Typography>
           </> : undefined}
       </CardContent>

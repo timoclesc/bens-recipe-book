@@ -1,0 +1,77 @@
+$animation-duration: 1.25s;
+$number-of-svgs: 6;
+
+.loaderContainer {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
+    perspective: 1000px;
+}
+
+.loader {
+    // animation: 2s cubic-bezier(.11, .98, .38, .96) 0.5s infinite both loader-flip;
+    animation: $animation-duration linear 0s infinite alternate both loader-flip-simple;
+    height: 300px;
+    width: 300px;
+    transform-style: preserve-3d;
+}
+
+.loader>* {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+@for $i from 1 through $number-of-svgs {
+    $animation-delay: (
+        $i - 2) * $animation-duration;
+
+    .loader>*:nth-child(#{$i}) {
+        opacity: 0;
+        transform: rotate3d(0, 1, 0, #{($i - 1) * 180}deg
+    );
+    animation: $animation-duration * $number-of-svgs linear image-swap $animation-delay infinite none;
+}
+}
+
+@keyframes loader-flip {
+    0% {
+        transform: rotate3d(0, 1, 0, 0deg);
+    }
+
+    90% {
+        transform: rotate3d(0, 1, 0, 1260deg);
+    }
+
+    100% {
+        transform: rotate3d(0, 1, 0, 1260deg);
+    }
+}
+
+@keyframes loader-flip-simple {
+    0% {
+        transform: rotate3d(0, 1, 0, 0deg);
+    }
+
+    100% {
+        transform: rotate3d(0, 1, 0, 180deg);
+    }
+}
+
+@keyframes image-swap {
+
+    0%,
+    33.33% {
+        opacity: 1;
+    }
+
+    33.34% {
+        opacity: 0;
+    }
+
+}

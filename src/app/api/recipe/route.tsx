@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
         recipe = data
     } else if ('@graph' in data && Array.isArray(data['@graph'])) {
         [...data['@graph']].forEach(
-            markup => { 
+            markup => {
                 if (markup['@type'] == 'Recipe') {
                     recipe = markup
                 }
@@ -28,6 +28,5 @@ export async function GET(request: NextRequest) {
         );
     }
 
-    return Response.json({data: recipe});
+    return Response.json({ data: recipe });
 }
- 

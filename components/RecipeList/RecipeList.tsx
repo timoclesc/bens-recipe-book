@@ -1,8 +1,6 @@
-import {FC} from 'react';
+import { FC } from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { RecipeLink, RecipeLinkType } from '@/components/RecipeLink';
 
@@ -12,29 +10,29 @@ import ListItem from '@mui/material/ListItem';
 type Props = {
   label: string;
   recipeList: RecipeLinkType[];
-  handleLinkClick: (url: string) => void;
+  handleLinkClick: (recipeLink: RecipeLinkType) => void;
 }
 
-export const RecipeList:FC<Props> = ({
+export const RecipeList: FC<Props> = ({
   label,
   recipeList,
   handleLinkClick,
-}:Props) => {
+}: Props) => {
   return (
-    <Card sx={{ }}>
+    <Card sx={{}}>
       <CardContent>
         <Typography variant="h4" component="h2">
-          { label }
+          {label}
         </Typography>
         <List>
-        { recipeList.map(
-          ({name, url}) => (
-            <ListItem key={url} disablePadding>
-              <RecipeLink label={name} onClick={() => handleLinkClick(url)} />
-            </ListItem>)
+          {recipeList.map(
+            (recipeLink) => (
+              <ListItem key={recipeLink.url} disablePadding>
+                <RecipeLink label={recipeLink.name} onClick={() => handleLinkClick(recipeLink)} />
+              </ListItem>)
           )
-        }
-        
+          }
+
         </List>
       </CardContent>
     </Card>
