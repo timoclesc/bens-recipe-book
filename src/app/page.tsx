@@ -84,6 +84,10 @@ const misc: RecipeLinkType[] = [
     url: 'https://holycowvegan.net/high-protein-whole-wheat-sandwich-bread/'
   },
   {
+    name: 'Sour Eggplant',
+    url: 'https://cooking.nytimes.com/recipes/1020459-sweet-and-sour-eggplant-with-garlic-chips'
+  },
+  {
     name: 'Pumfu (Pepita Tofu)',
     url: 'https://www.marystestkitchen.com/pumpkin-seed-tofu/',
     notes: [
